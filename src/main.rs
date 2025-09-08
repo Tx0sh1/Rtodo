@@ -22,7 +22,28 @@ fn main() {
                 todo_items.push(trimmed_item);
             },
             "print" | "p" => println!("here are your items: {:?}", todo_items),
-            "delete" | "d" => println!("delete works"),
+            "delete" | "d" => {
+                for (index, value) in todo_items.iter().enumerate() {
+                    println!("index: {}, value: {}", index, value);
+
+                }
+
+                println!("enter only the index number you wish to remove");
+
+                let mut user_index = String::new();
+                io::stdin().read_line(&mut user_index).expect("failed to read line");
+
+                match user_index.trim().parse::<usize>() {
+                        Ok(index) => {
+                            if index < todo_items.len(){
+                                todo_items.remove(index);
+                            } else { println!("Index out of bounds. Please enter a valid index."); }
+                        }
+                        Err(e) => {
+                            println!("Please enter a valid number. Error: {}", e);
+                        }
+                    }
+                },
             "quit" | "q" => {
                 println!("Thank you!");
                 break;
